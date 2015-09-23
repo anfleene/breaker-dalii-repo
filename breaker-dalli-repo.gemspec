@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'breaker/dalli/repo/version'
+require 'breaker/dalli/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "breaker-dalli-repo"
-  spec.version       = Breaker::Dalli::Repo::VERSION
+  spec.version       = Breaker::Dalli::VERSION
   spec.authors       = ["Andy Fleener"]
   spec.email         = ["andrew.fleener@sportngin.com"]
 
@@ -25,5 +25,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.8"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "activesupport"
   spec.add_development_dependency "rspec"
 end
