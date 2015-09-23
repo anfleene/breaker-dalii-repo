@@ -10,8 +10,8 @@ module Breaker
         self.failure_threshold ||= defaults[:failure_threshold]
         self.retry_timeout ||= defaults[:retry_timeout]
         self.timeout ||= defaults[:timeout]
-        self.failure_count ||= defaults[:failure_count].to_i
         self.retry_threshold ||= defaults[:retry_threshold]
+        set_value(:failure_count, 0)
       end
 
       def defaults
@@ -28,6 +28,14 @@ module Breaker
         other.instance_of?(self.class) && name == other.name
       end
 
+      def eql?(other)
+        self == other
+      end
+
+      def hash
+        [self.class, self.name].hash
+      end
+
       def set_value(key, value)
         Rails.cache.write(key_name(key), value)
       end
@@ -35,10 +43,8 @@ module Breaker
       def get_value(key)
         Rails.cache.read(key_name(key))
       end
-      def inc_value(key, value, ttl=nil)
-        options = {}
-        options[:ttl] = ttl if ttl
-        Rails.cache.increment(key_name(key), value, options)
+      def inc_value(key, value)
+        Rails.cache.increment(key_name(key), value)
       end
 
       def key_name(key)
