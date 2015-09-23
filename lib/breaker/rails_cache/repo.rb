@@ -1,9 +1,9 @@
-require "breaker/dalli/version"
-require "breaker/dalli/fuse"
-require "breaker/dalli/store"
+require "breaker/rails_cache/version"
+require "breaker/rails_cache/fuse"
+require "breaker/rails_cache/store"
 
 module Breaker
-  module Dalli
+  module RailsCache
     class Repo
 
       attr_reader :store

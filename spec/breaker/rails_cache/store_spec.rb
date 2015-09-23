@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Breaker::Dalli::Store do
+describe Breaker::RailsCache::Store do
   it "find creates or finds fuses" do
-    expect(subject.find(:test)).to be_a Breaker::Dalli::Fuse
+    expect(subject.find(:test)).to be_a Breaker::RailsCache::Fuse
     expect(subject.find(:test)).to eq(subject.find(:test))
   end
 

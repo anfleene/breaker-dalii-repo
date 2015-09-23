@@ -1,5 +1,5 @@
 module Breaker
-  module Dalli
+  module RailsCache
     class Fuse
       DATA_ATTRS = [:state, :failure_threshold, :retry_timeout, :timeout, :retry_threshold]
       attr_accessor :name

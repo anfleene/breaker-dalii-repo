@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Breaker::Dalli::Fuse do
-  subject { Breaker::Dalli::Fuse.new(:test) }
+describe Breaker::RailsCache::Fuse do
+  subject { Breaker::RailsCache::Fuse.new(:test) }
   it 'uses the Repo config has defaults' do
-    expect(subject.defaults).to eq(Breaker::Dalli::Repo.config)
+    expect(subject.defaults).to eq(Breaker::RailsCache::Repo.config)
   end
 
   it 'sets default values' do
@@ -21,7 +21,7 @@ describe Breaker::Dalli::Fuse do
   end
 
   it 'can detect equality based on fuse name' do
-    expect(subject).to eq(Breaker::Dalli::Fuse.new(:test))
+    expect(subject).to eq(Breaker::RailsCache::Fuse.new(:test))
   end
 
   it 'sets a value using rails cache' do

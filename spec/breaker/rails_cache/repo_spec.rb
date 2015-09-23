@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe Breaker::Dalli::Repo do
+describe Breaker::RailsCache::Repo do
   let(:fuse) { double(:fuse) }
 
   it 'has a version number' do
-    expect(Breaker::Dalli::VERSION).not_to be nil
+    expect(Breaker::RailsCache::VERSION).not_to be nil
   end
 
   it 'has a store' do
-    expect(subject.store).to be_a Breaker::Dalli::Store
+    expect(subject.store).to be_a Breaker::RailsCache::Store
   end
 
   it 'keeps a count' do
@@ -30,8 +30,8 @@ describe Breaker::Dalli::Repo do
   end
 end
 
-describe Breaker::Dalli::Repo do
-  subject { Breaker::Dalli::Repo }
+describe Breaker::RailsCache::Repo do
+  subject { Breaker::RailsCache::Repo }
 
   it 'has a config' do
     expect(subject.config).to be_a Hash
@@ -39,7 +39,7 @@ describe Breaker::Dalli::Repo do
 end
 
 describe Breaker do
-  it 'has a dalli repo' do
-    expect(subject.repo).to be_a Breaker::Dalli::Repo
+  it 'has a rails cache repo' do
+    expect(subject.repo).to be_a Breaker::RailsCache::Repo
   end
 end

@@ -1,5 +1,5 @@
 module Breaker
-  module Dalli
+  module RailsCache
     class Store
       def initialize
         @store = Set.new
