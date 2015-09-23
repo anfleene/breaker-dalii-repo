@@ -12,7 +12,7 @@ describe Breaker::RailsCache::Repo do
   end
 
   it 'keeps a count' do
-    expect(subject.store).to receive(:length)
+    expect(subject.store).to receive(:count)
     subject.count
   end
 
