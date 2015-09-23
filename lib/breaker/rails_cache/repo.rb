@@ -25,10 +25,11 @@ module Breaker
       def upsert(attributes)
         fuse = store.find attributes.fetch(:name)
         fuse.update attributes
+        fuse
       end
 
       def count
-        store.length
+        store.count
       end
 
       def first
