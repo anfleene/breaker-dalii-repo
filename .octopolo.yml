@@ -1,0 +1,4 @@
+github_repo: sportngin/breaker-rails-cache-repo
+semantic_versioning: true
+branches_to_keep:
+  - master
