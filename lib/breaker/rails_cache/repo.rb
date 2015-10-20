@@ -17,8 +17,10 @@ module Breaker
           failure_threshold: 10,
           retry_timeout: 60,
           timeout: 5,
-          state: :closed,
+          breaker_error_class: Timeout::Error,
           failure_count: 0,
+          failure_count_ttl: 300,
+          state: :closed,
         }
       end
 
@@ -26,14 +28,6 @@ module Breaker
         fuse = store.find attributes.fetch(:name)
         fuse.update attributes
         fuse
-      end
-
-      def count
-        store.count
-      end
-
-      def first
-        store.first
       end
     end
   end
