@@ -74,7 +74,7 @@ module Breaker
       end
 
       def failure_count=(value)
-        if @failure_count.nil? || @failure_count.zero?
+        if @failure_count.nil? || @failure_count.zero? || value.zero?
           Rails.cache.write(key_name(:failure_count), 0, raw: true)
         end
         @failure_count = inc_value(:failure_count, 1)
