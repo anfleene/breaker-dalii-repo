@@ -7,19 +7,6 @@ describe Breaker::RailsCache::Store do
   end
 
   it "Running find multiple times only creates one Fuse" do
-    subject.find(:test)
-    subject.find(:test)
-    subject.find(:test)
-    expect(subject.count).to eq(1)
-  end
-
-  it "knows the number of fuses" do
-    subject.find(:test)
-    expect(subject.count).to eq(1)
-  end
-
-  it "knows the first fuse in the store" do
-    fuse = subject.find(:test)
-    expect(subject.first).to eq(fuse)
+    expect(subject.find(:test)).to eq(subject.find(:test))
   end
 end

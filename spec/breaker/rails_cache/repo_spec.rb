@@ -11,16 +11,6 @@ describe Breaker::RailsCache::Repo do
     expect(subject.store).to be_a Breaker::RailsCache::Store
   end
 
-  it 'keeps a count' do
-    expect(subject.store).to receive(:count)
-    subject.count
-  end
-
-  it 'can find the first fuse in the store' do
-    expect(subject.store).to receive(:first)
-    subject.first
-  end
-
   it 'can create/update a fuse' do
     attrs = double(:attrs)
     allow(attrs).to receive(:fetch).with(:name) { fuse }

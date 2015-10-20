@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Breaker::RailsCache::Fuse do
   subject { Breaker::RailsCache::Fuse.new(:test) }
+
   it 'uses the Repo config has defaults' do
     expect(subject.defaults).to eq(Breaker::RailsCache::Repo.config)
   end
@@ -26,7 +27,7 @@ describe Breaker::RailsCache::Fuse do
 
   it 'sets a value using rails cache' do
     subject
-    expect(Rails.cache).to receive(:write).with("BREAKER_test_state", :closed)
+    expect(Rails.cache).to receive(:write).with("BREAKER_test_state", :closed, {})
     subject.set_value(:state, :closed)
   end
 
@@ -38,23 +39,20 @@ describe Breaker::RailsCache::Fuse do
 
   it 'increment a value in rails cache' do
     subject
-    expect(Rails.cache).to receive(:increment).with("BREAKER_test_failure_count", 1, {})
+    expect(Rails.cache).to receive(:increment).with("BREAKER_test_failure_count", 1, { :expires_in => 300, :initial => 1})
     subject.inc_value(:failure_count, 1)
-  end
-
-  it 'increment can set a ttl' do
-    expect(Rails.cache).to receive(:increment).with("BREAKER_test_failure_count", 1, { ttl: 20})
-    subject.inc_value(:failure_count, 1, 20)
-    subject.failure_count = 0
   end
 
   it 'generates a key name' do
     expect(subject.key_name(:test)).to eq("BREAKER_test_test")
   end
 
-  it 'can set the failure count to 0' do
+  it 'can set reset the failure count to the initial value' do
+    subject.failure_count = 1
+    subject.failure_count = 1
+    expect(subject.failure_count).to eq(2)
     subject.failure_count = 0
-    expect(subject.failure_count).to eq(0)
+    expect(subject.failure_count).to eq(1)
   end
 
   it 'can increment the failure count' do
