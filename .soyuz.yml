@@ -1,6 +1,6 @@
 defaults:
   deploy_cmds:
-    - gem build breaker.gemspec
+    - gem build breaker-rails-cache.gemspec
     - fury push *.gem
   before_deploy_cmds:
     - /usr/local/bin/op tag-release
