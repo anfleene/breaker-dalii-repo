@@ -17,6 +17,7 @@ module Breaker
           failure_threshold: 10,
           retry_timeout: 60,
           timeout: 5,
+          half_open_timeout: 0.5,
           breaker_error_class: Timeout::Error,
           failure_count: 0,
           failure_count_ttl: 300,
