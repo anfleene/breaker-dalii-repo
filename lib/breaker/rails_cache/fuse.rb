@@ -1,7 +1,7 @@
 module Breaker
   module RailsCache
     class Fuse
-      attr_accessor :name, :failure_threshold, :retry_threshold, :retry_timeout, :timeout, :breaker_error_class, :failure_count_ttl
+      attr_accessor :name, :failure_threshold, :retry_threshold, :retry_timeout, :timeout, :half_open_timeout, :breaker_error_class, :failure_count_ttl
 
       def initialize(name, options={})
         self.name = name
@@ -9,6 +9,7 @@ module Breaker
         self.failure_threshold = options[:failure_threshold]
         self.retry_timeout = options[:retry_timeout]
         self.timeout = options[:timeout]
+        self.half_open_timeout = options[:half_open_timeout]
         self.breaker_error_class = options[:breaker_error_class]
         self.failure_count_ttl = options[:failure_count_ttl]
         self.state || set_value(:state, options[:state])

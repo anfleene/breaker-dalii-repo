@@ -11,6 +11,7 @@ describe Breaker::RailsCache::Fuse do
     expect(subject.state).to eq(:closed)
     expect(subject.failure_threshold).to eq(10)
     expect(subject.timeout).to eq(5)
+    expect(subject.half_open_timeout).to eq(0.5)
     expect(subject.failure_count).to eq(0)
     expect(subject.retry_timeout).to eq(60)
   end
