@@ -81,7 +81,7 @@ module Breaker
 
       def failure_count=(value)
         if value.zero?
-          Rails.cache.delete_matched(key_name(:failure_count))
+          Rails.cache.delete(key_name(:failure_count))
           @failure_count = 0
         else
           @failure_count = inc_value(:failure_count, 1)
