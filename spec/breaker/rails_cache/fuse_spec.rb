@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Breaker::RailsCache::Fuse do
+  before :each do
+    Rails.instance_variable_set("@cache", ActiveSupport::Cache::MemoryStore.new)
+  end
   subject { Breaker::RailsCache::Fuse.new(:test) }
 
   it 'uses the Repo config has defaults' do
@@ -39,9 +42,8 @@ describe Breaker::RailsCache::Fuse do
   end
 
   it 'increment a value in rails cache' do
-    subject
-    expect(Rails.cache).to receive(:increment).with("BREAKER_test_failure_count", 1, { :expires_in => 300, :initial => 1})
-    subject.inc_value(:failure_count, 1)
+    expect(subject.inc_value(:failure_count, 1)).to eq(1)
+    expect(subject.inc_value(:failure_count, 1)).to eq(2)
   end
 
   it 'generates a key name' do
@@ -53,7 +55,7 @@ describe Breaker::RailsCache::Fuse do
     subject.failure_count = 1
     expect(subject.failure_count).to eq(2)
     subject.failure_count = 0
-    expect(subject.failure_count).to eq(1)
+    expect(subject.failure_count).to eq(0)
   end
 
   it 'can increment the failure count' do
