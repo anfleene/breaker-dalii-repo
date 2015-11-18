@@ -45,7 +45,12 @@ module Breaker
         Rails.cache.read(key_name(key))
       end
       def inc_value(key, value)
-        Rails.cache.increment(key_name(key), value, expires_in: failure_count_ttl, initial: 1)
+        if Rails.cache.read(key_name(key))
+          Rails.cache.increment(key_name(key), value)
+        else
+          Rails.cache.write(key_name(key), 1, raw:true, expires_in: failure_count_ttl)
+          return 1
+        end
       end
 
       def key_name(key)
@@ -75,11 +80,12 @@ module Breaker
       end
 
       def failure_count=(value)
-        if @failure_count.nil? || @failure_count.zero? || value.zero?
-          Rails.cache.write(key_name(:failure_count), 0, raw: true)
+        if value.zero?
+          Rails.cache.delete_matched(key_name(:failure_count))
+          @failure_count = 0
+        else
+          @failure_count = inc_value(:failure_count, 1)
         end
-        @failure_count = inc_value(:failure_count, 1)
-        @failure_count
       end
     end
   end
